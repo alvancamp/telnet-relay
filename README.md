@@ -2,17 +2,17 @@
 
 A simple program that acts as a telnet relay, allowing many clients to connect to one server. Useful for strange servers which only allow a single client, such as Blackmagic HyperDecks.
 
-## Installation and Usage (Windows)
+## Installation and Usage (Windows, macOS, and Linux)
 
-Download and run the .exe file on the [latest release](https://github.com/alvancamp/telnet-relay/releases). Be sure to provide the `--connectToHost` argument, like so:
+Download and run the executable file for your OS from the [latest release](https://github.com/alvancamp/telnet-relay/releases). Be sure to provide the `--connectToHost` argument, like so:
 
 ```bash
 telnet-relay.exe --connectToHost 192.168.1.50
 ```
 
-## Other Platforms
+## Development
 
-You'll need to compile and run the program as a Node.js script, rather than being able to just run a pre-made exe (make sure you have [Node.js 18](https://nodejs.org/en/download) and [Yarn](https://classic.yarnpkg.com/lang/en/docs/install) installed first):
+Make sure you have [Node.js 18](https://nodejs.org/en/download) and [Yarn](https://classic.yarnpkg.com/lang/en/docs/install) installed, then:
 
 ```bash
 git clone https://github.com/alvancamp/telnet-relay.git

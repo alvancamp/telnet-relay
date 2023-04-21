@@ -36,7 +36,7 @@ jobs:
           cache: 'yarn'
 
       - run: yarn
-      - run: npm run build:binary
+      - run: yarn build:binary
 
       - name: Publish to github release
         shell: bash
@@ -62,7 +62,7 @@ jobs:
           cache: 'yarn'
 
       - run: yarn
-      - run: npm run build:binary
+      - run: yarn build:binary
 
       - name: Publish to github release
         run: |
@@ -87,7 +87,7 @@ jobs:
           cache: 'yarn'
 
       - run: yarn
-      - run: npm run build:binary
+      - run: yarn build:binary
 
       - name: Publish to github release
         run: |

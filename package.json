@@ -15,7 +15,6 @@
 		"@types/yargs": "^17.0.24",
 		"trash-cli": "^5.0.0",
 		"ts-loader": "^9.4.2",
-		"ts-node": "^10.9.1",
 		"tslib": "^2.5.0",
 		"typescript": "^5.0.4",
 		"webpack": "^5.80.0",
@@ -30,7 +29,7 @@
 		"prebuild": "trash dist",
 		"build": "webpack",
 		"prebuild:binary": "yarn build",
-		"build:binary": "ts-node src/build-binary.ts",
+		"build:binary": "node dist/build-binary.ts",
 		"start": "node dist/telnet-relay.js"
 	},
 	"prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
