@@ -1,0 +1,48 @@
+{
+	"name": "telnet-relay",
+	"version": "1.0.0",
+	"main": "dist/telnet-relay.js",
+	"author": "Alex Van Camp <vancamp.alex@gmail.com>",
+	"license": "MIT",
+	"dependencies": {
+		"telnetlib": "^1.0.2",
+		"yargs": "^17.7.1"
+	},
+	"devDependencies": {
+		"@sofie-automation/code-standard-preset": "^2.4.1",
+		"@types/node": "^18.15.13",
+		"@types/telnetlib": "^1.0.0",
+		"@types/yargs": "^17.0.24",
+		"trash-cli": "^5.0.0",
+		"ts-loader": "^9.4.2",
+		"ts-node": "^10.9.1",
+		"tslib": "^2.5.0",
+		"typescript": "^5.0.4",
+		"webpack": "^5.80.0",
+		"webpack-cli": "^5.0.2"
+	},
+	"scripts": {
+		"prepare": "husky install",
+		"lint:raw": "eslint --ext .ts --ext .js --ext .tsx --ext .jsx --ignore-pattern dist",
+		"lint": "yarn lint:raw .",
+		"lint-fix": "yarn lint --fix",
+		"license-validate": "yarn sofie-licensecheck",
+		"prebuild": "trash dist",
+		"build": "webpack",
+		"prebuild:binary": "yarn build",
+		"build:binary": "ts-node src/build-binary.ts",
+		"start": "node dist/telnet-relay.js"
+	},
+	"prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
+	"lint-staged": {
+		"*.{css,json,md,scss}": [
+			"prettier --write"
+		],
+		"*.{ts,tsx,js,jsx}": [
+			"yarn lint:raw --fix"
+		]
+	},
+	"engines": {
+		"node": "^18.16.0"
+	}
+}
