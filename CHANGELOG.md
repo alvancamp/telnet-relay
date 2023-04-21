@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/alvancamp/telnet-relay/compare/v1.1.3...v1.1.4) (2023-04-21)
+
+
+### Bug Fixes
+
+* make it actually work ([47240f5](https://github.com/alvancamp/telnet-relay/commit/47240f576ef55c3c38d5e3adad96ef0645efc3b8))
+
 ## [1.1.3](https://github.com/alvancamp/telnet-relay/compare/v1.1.2...v1.1.3) (2023-04-21)
 
 
