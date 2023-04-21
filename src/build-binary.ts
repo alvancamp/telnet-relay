@@ -14,7 +14,7 @@ async function main() {
 	await fs.copyFile(nodePath, 'dist/telnet-relay' + (process.platform === 'win32' ? '.exe' : ''))
 	console.log(' done!')
 
-	process.stdout.write('Compiling code into exe...')
+	process.stdout.write('Injecting code into exe...')
 	await execPromise(
 		`npx postject dist/telnet-relay${
 			process.platform === 'win32' ? '.exe' : ''

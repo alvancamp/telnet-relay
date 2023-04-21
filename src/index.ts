@@ -9,18 +9,20 @@ const relayServerSockets: Set<Socket & telnetlib.TelnetSocket> = new Set()
 createClientConnection()
 
 const relayServer = telnetlib.createServer({ keepAlive: true }, (socket) => {
-	const address = socket.address()
-	if ('address' in address) {
-		console.log(`New client connection from ${address.address}:${address.port}`)
-	} else {
-		console.log(`New client connection from unknown`)
-	}
+	console.log(`New client connection`)
+
+	socket.on('negotiated', () => {
+		socket.write(`Connected. (Proxied to ${argv.connectToHost}:${argv.connectToPort})\n\r`)
+		relayServerSockets.add(socket)
+	})
 
 	// Whenever the relay server receives data, forward it to the relay client.
 	socket.on('data', (data) => {
-		console.log('FROM CLIENT:', data.toString('ascii'))
+		process.stdout.write('FROM CLIENT:' + data.toString('ascii'))
 		if (relayClient) {
 			relayClient.write(data)
+		} else {
+			console.log('Relay unavailable, command dropped.')
 		}
 	})
 
@@ -45,6 +47,8 @@ function createClientConnection() {
 		relayClient = null
 	}
 
+	let connected = false
+
 	console.log(`Connecting to server ${argv.connectToHost}:${argv.connectToPort}...`)
 
 	const client = telnetlib.createConnection({
@@ -55,11 +59,19 @@ function createClientConnection() {
 
 	// Whenever the relay client receives data, forward it to all of the server's clients.
 	client.on('data', (data) => {
-		console.log('FROM SERVER:', data.toString('ascii'))
+		if (!connected) {
+			console.log(`Connected to server ${argv.connectToHost}:${argv.connectToPort}`)
+			connected = true
+			relayClient = client
+		}
+
+		process.stdout.write('FROM SERVER: ' + data.toString('ascii'))
 		if (relayServerReady) {
 			for (const socket of relayServerSockets) {
 				socket.write(data)
 			}
+		} else {
+			console.log("Not relaying because the relay server isn't ready")
 		}
 	})
 
@@ -74,10 +86,5 @@ function createClientConnection() {
 		}
 		relayClient = null
 		createClientConnection()
-	})
-
-	client.on('ready', () => {
-		console.log(`Connected to server ${argv.connectToHost}:${argv.connectToPort}`)
-		relayClient = client
 	})
 }

@@ -18,5 +18,6 @@ Make sure you have [Node.js 18](https://nodejs.org/en/download) and [Yarn](https
 git clone https://github.com/alvancamp/telnet-relay.git
 cd telnet-relay
 yarn
+yarn build
 yarn start --connectToHost 192.168.1.50
 ```
