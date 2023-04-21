@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Restore npm dependency cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: npm-${{ runner.os }}-18.x-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Lint
+        run: |
+          npm run lint
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18.x]
+        os: [windows-latest]
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+
+      - name: Restore Chromium dependency cache (Windows)
+        uses: actions/cache@v3
+        with:
+          path: |
+            C:\Users\runneradmin\.cache\puppeteer
+          key: chromium-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+        if: runner.os == 'Windows'
+
+      - name: Restore npm dependency cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: npm-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: npm run build
