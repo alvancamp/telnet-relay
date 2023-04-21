@@ -29,7 +29,7 @@
 		"prebuild": "trash dist",
 		"build": "webpack",
 		"prebuild:binary": "yarn build",
-		"build:binary": "node dist/build-binary.ts",
+		"build:binary": "node dist/build-binary.js",
 		"start": "node dist/telnet-relay.js"
 	},
 	"prettier": "@sofie-automation/code-standard-preset/.prettierrc.json",
