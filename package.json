@@ -1,6 +1,6 @@
 {
 	"name": "telnet-relay",
-	"version": "1.1.2",
+	"version": "1.1.3",
 	"main": "dist/telnet-relay.js",
 	"author": "Alex Van Camp <vancamp.alex@gmail.com>",
 	"license": "MIT",
