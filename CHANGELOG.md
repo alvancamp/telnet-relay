@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/alvancamp/telnet-relay/compare/v1.1.1...v1.1.2) (2023-04-21)
+
+
+### Bug Fixes
+
+* fixes to build:binary script (handle symlinks) ([e481e1f](https://github.com/alvancamp/telnet-relay/commit/e481e1f4bf2c4b2f49924d9d9f8749c067222810))
+
 ## [1.1.1](https://github.com/alvancamp/telnet-relay/compare/v1.1.0...v1.1.1) (2023-04-21)
 
 
