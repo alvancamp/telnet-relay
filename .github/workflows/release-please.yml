@@ -22,7 +22,7 @@ jobs:
           release-type: node
           package-name: telnet-relay
 
-  publish:
+  publish-windows:
     runs-on: windows-latest
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
@@ -33,8 +33,33 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'npm'
+          cache: 'yarn'
+
+      - run: yarn
+      - run: npm run build:binary
+
+      - name: Publish to github release
+        shell: bash
+        run: |
+          cd dist
+          FILE_NAME=telnet-relay_${{ needs.release-please.outputs.release_name }}_windows.exe
+          mv telnet-relay $FILE_NAME
+          gh release upload ${{ needs.release-please.outputs.release_name }} $FILE_NAME
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  publish-macos:
+    runs-on: macos-latest
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
 
       - run: yarn
       - run: npm run build:binary
@@ -42,6 +67,33 @@ jobs:
       - name: Publish to github release
         run: |
           cd dist
-          gh release upload ${{ needs.release-please.outputs.release_name }} telnet-relay.exe
+          FILE_NAME=telnet-relay_${{ needs.release-please.outputs.release_name }}_linux
+          mv telnet-relay $FILE_NAME
+          gh release upload ${{ needs.release-please.outputs.release_name }} $FILE_NAME
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  publish-linux:
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - run: yarn
+      - run: npm run build:binary
+
+      - name: Publish to github release
+        run: |
+          cd dist
+          FILE_NAME=telnet-relay_${{ needs.release-please.outputs.release_name }}_macos
+          mv telnet-relay $FILE_NAME
+          gh release upload ${{ needs.release-please.outputs.release_name }} $FILE_NAME
         env:
           GH_TOKEN: ${{ github.token }}
