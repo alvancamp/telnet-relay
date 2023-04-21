@@ -1,7 +1,6 @@
 const path = require('path')
 
-module.exports = {
-	entry: './src/index.ts',
+const shared = {
 	mode: 'production',
 	module: {
 		rules: [
@@ -22,10 +21,25 @@ module.exports = {
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js'],
 	},
-	output: {
-		filename: 'telnet-relay.js',
-		path: path.resolve(__dirname, 'dist'),
-	},
 	target: 'node18.16',
 	externals: {},
 }
+
+module.exports = [
+	{
+		...shared,
+		entry: './src/index.ts',
+		output: {
+			filename: 'telnet-relay.js',
+			path: path.resolve(__dirname, 'dist'),
+		},
+	},
+	{
+		...shared,
+		entry: './src/build-binary.ts',
+		output: {
+			filename: 'build-binary.js',
+			path: path.resolve(__dirname, 'dist'),
+		},
+	},
+]
