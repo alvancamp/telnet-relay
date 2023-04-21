@@ -67,7 +67,7 @@ jobs:
       - name: Publish to github release
         run: |
           cd dist
-          FILE_NAME=telnet-relay_${{ needs.release-please.outputs.release_name }}_linux
+          FILE_NAME=telnet-relay_${{ needs.release-please.outputs.release_name }}_macos
           mv telnet-relay $FILE_NAME
           gh release upload ${{ needs.release-please.outputs.release_name }} $FILE_NAME
         env:
@@ -92,7 +92,7 @@ jobs:
       - name: Publish to github release
         run: |
           cd dist
-          FILE_NAME=telnet-relay_${{ needs.release-please.outputs.release_name }}_macos
+          FILE_NAME=telnet-relay_${{ needs.release-please.outputs.release_name }}_linux
           mv telnet-relay $FILE_NAME
           gh release upload ${{ needs.release-please.outputs.release_name }} $FILE_NAME
         env:
