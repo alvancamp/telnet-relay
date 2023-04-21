@@ -4,7 +4,7 @@ A simple program that acts as a telnet relay, allowing many clients to connect t
 
 ## Installation and Usage (Windows)
 
-Download and run the .exe file on the [latest release](releases/latest). Be sure to provide the `--connectToHost` argument, like so:
+Download and run the .exe file on the [latest release](https://github.com/alvancamp/telnet-relay/releases). Be sure to provide the `--connectToHost` argument, like so:
 
 ```bash
 telnet-relay.exe --connectToHost 192.168.1.50
