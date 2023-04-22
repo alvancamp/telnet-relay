@@ -12,6 +12,8 @@ createClientConnection()
 const relayServer = telnetlib.createServer({ keepAlive: true }, (socket) => {
 	console.log(`New client connection`)
 
+	socket.setEncoding('utf8')
+
 	socket.on('negotiated', () => {
 		if (argv.hyperdeck) {
 			for (const line of handshakeResponse) {
@@ -25,7 +27,16 @@ const relayServer = telnetlib.createServer({ keepAlive: true }, (socket) => {
 
 	// Whenever the relay server receives data, forward it to the relay client.
 	socket.on('data', (data) => {
-		process.stdout.write('FROM CLIENT:' + data.toString('ascii'))
+		const str = data.toString('utf8')
+		if (argv.hyperdeck) {
+			if (str.startsWith('watchdog') || str.startsWith('period') || str.startsWith('ping')) {
+				// drop the command and fake a response, we don't want them in this proxy setup.
+				socket.write(' 200 ok\n\r')
+				return
+			}
+		}
+
+		process.stdout.write('FROM CLIENT:' + str)
 		if (relayClient) {
 			relayClient.write(data)
 		} else {
@@ -73,11 +84,11 @@ function createClientConnection() {
 			relayClient = client
 		}
 
-		process.stdout.write('FROM SERVER: ' + data.toString('ascii'))
+		process.stdout.write('FROM SERVER: ' + data.toString('utf8'))
 
 		// The HyperDeck handshake is the first four lines sent.
 		if (argv.hyperdeck && handshakeResponse.length < 4) {
-			handshakeResponse.push(data.toString('ascii'))
+			handshakeResponse.push(data.toString('utf8'))
 		}
 
 		if (relayServerReady) {
