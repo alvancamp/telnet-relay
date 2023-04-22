@@ -18,7 +18,8 @@ async function main() {
 	await execPromise(
 		`npx postject dist/telnet-relay${
 			process.platform === 'win32' ? '.exe' : ''
-		} NODE_JS_CODE dist/telnet-relay.js --sentinel-fuse NODE_JS_FUSE_fce680ab2cc467b6e072b8b5df1996b2`
+		} NODE_JS_CODE dist/telnet-relay.js --sentinel-fuse NODE_JS_FUSE_fce680ab2cc467b6e072b8b5df1996b2` +
+			(process.platform === 'darwin' ? ' --macho-segment-name NODE_JS' : '')
 	)
 	console.log(' done!')
 }
