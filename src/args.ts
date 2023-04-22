@@ -17,4 +17,9 @@ export const argv = yargs(hideBin(process.argv))
 		description: 'The host for the client to connect to',
 		demandOption: true,
 	})
+	.option('hyperdeck', {
+		type: 'boolean',
+		description: 'Whether or not to specifically handle Blackmagic HyperDecks, which need extra care...',
+		default: true,
+	})
 	.parseSync()

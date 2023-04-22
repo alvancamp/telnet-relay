@@ -2,6 +2,7 @@ import telnetlib = require('telnetlib')
 import { argv } from './args'
 import { Socket } from 'net'
 
+let handshakeResponse: string[] = []
 let relayClient: telnetlib.TelnetSocket | null = null
 let relayServerReady = false
 const relayServerSockets: Set<Socket & telnetlib.TelnetSocket> = new Set()
@@ -12,7 +13,13 @@ const relayServer = telnetlib.createServer({ keepAlive: true }, (socket) => {
 	console.log(`New client connection`)
 
 	socket.on('negotiated', () => {
-		socket.write(`Connected. (Proxied to ${argv.connectToHost}:${argv.connectToPort})\n\r`)
+		if (argv.hyperdeck) {
+			for (const line of handshakeResponse) {
+				socket.write(line)
+			}
+		} else {
+			socket.write(`Connected. (Proxied to ${argv.connectToHost}:${argv.connectToPort})\n\r`)
+		}
 		relayServerSockets.add(socket)
 	})
 
@@ -45,6 +52,7 @@ function createClientConnection() {
 	if (relayClient) {
 		relayClient.destroy()
 		relayClient = null
+		handshakeResponse = []
 	}
 
 	let connected = false
@@ -66,6 +74,12 @@ function createClientConnection() {
 		}
 
 		process.stdout.write('FROM SERVER: ' + data.toString('ascii'))
+
+		// The HyperDeck handshake is the first four lines sent.
+		if (argv.hyperdeck && handshakeResponse.length < 4) {
+			handshakeResponse.push(data.toString('ascii'))
+		}
+
 		if (relayServerReady) {
 			for (const socket of relayServerSockets) {
 				socket.write(data)
@@ -78,13 +92,16 @@ function createClientConnection() {
 	client.on('error', (error) => {
 		console.error(`Connection error (${error.message}), retrying...`)
 		relayClient = null
+		handshakeResponse = []
+		createClientConnection()
 	})
 
 	client.on('close', (hadError) => {
 		if (!hadError) {
 			console.error(`Connection to server closed, reconnecting...`)
+			relayClient = null
+			handshakeResponse = []
+			createClientConnection()
 		}
-		relayClient = null
-		createClientConnection()
 	})
 }
