@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/alvancamp/telnet-relay/compare/v1.1.5...v1.1.6) (2023-04-22)
+
+
+### Bug Fixes
+
+* macos build ([cde24d4](https://github.com/alvancamp/telnet-relay/commit/cde24d479106042ffa8940eec4c1186cedeef6de))
+
 ## [1.1.5](https://github.com/alvancamp/telnet-relay/compare/v1.1.4...v1.1.5) (2023-04-22)
 
 
