@@ -28,7 +28,14 @@ const relayServer = telnetlib.createServer({ keepAlive: true }, (socket) => {
 	// Whenever the relay server receives data, forward it to the relay client.
 	socket.on('data', (data) => {
 		const str = data.toString('utf8')
+
+		// HyperDeck-specific handling goes here.
 		if (argv.hyperdeck) {
+			if (str.startsWith('quit')) {
+				socket.destroy()
+				return
+			}
+
 			if (str.startsWith('watchdog') || str.startsWith('period') || str.startsWith('ping')) {
 				// drop the command and fake a response, we don't want them in this proxy setup.
 				socket.write(' 200 ok\n\r')
@@ -116,3 +123,9 @@ function createClientConnection() {
 		}
 	})
 }
+
+process.on('beforeExit', () => {
+	if (relayClient) {
+		relayClient.write('quit\n\r')
+	}
+})
