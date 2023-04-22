@@ -1,6 +1,7 @@
 import telnetlib = require('telnetlib')
 import { argv } from './args'
 import { Socket } from 'net'
+import exitHook from './exit-hook'
 
 let handshakeResponse: string[] = []
 let relayClient: telnetlib.TelnetSocket | null = null
@@ -36,7 +37,11 @@ const relayServer = telnetlib.createServer({ keepAlive: true }, (socket) => {
 				return
 			}
 
-			if (str.startsWith('watchdog') || str.startsWith('period') || str.startsWith('ping')) {
+			if (str.startsWith('watchdog')) {
+				return
+			}
+
+			if (str.startsWith('period') || str.startsWith('ping')) {
 				// drop the command and fake a response, we don't want them in this proxy setup.
 				socket.write(' 200 ok\n\r')
 				return
@@ -124,9 +129,11 @@ function createClientConnection() {
 	})
 }
 
-process.on('beforeExit', () => {
+exitHook(() => {
+	process.stdout.write('Cleaning up before exit...')
 	if (relayClient) {
 		relayClient.write('quit\n\r')
 		relayClient.destroy()
 	}
+	console.log(' done!')
 })
