@@ -127,5 +127,6 @@ function createClientConnection() {
 process.on('beforeExit', () => {
 	if (relayClient) {
 		relayClient.write('quit\n\r')
+		relayClient.destroy()
 	}
 })
