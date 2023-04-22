@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.7](https://github.com/alvancamp/telnet-relay/compare/v1.1.6...v1.1.7) (2023-04-22)
+
+
+### Bug Fixes
+
+* destroy socket on beforeExit ([2aff13f](https://github.com/alvancamp/telnet-relay/commit/2aff13fda4dc7f8cdc93de4c13fd6141da4fff6e))
+* **hyperdeck:** suppress quit ([9807589](https://github.com/alvancamp/telnet-relay/commit/98075895b873618aa3b904b2fbc77021b0bdae3c))
+* **hyperdeck:** suppress watchdog and pings ([076f111](https://github.com/alvancamp/telnet-relay/commit/076f11109a277be89599a3074f5cf0e60917e59e))
+* more hyperdeck fixes; handle process exit ([6b8ad33](https://github.com/alvancamp/telnet-relay/commit/6b8ad33766ce669ae0db085ee7a9e656b0a823a9))
+
 ## [1.1.6](https://github.com/alvancamp/telnet-relay/compare/v1.1.5...v1.1.6) (2023-04-22)
 
 
