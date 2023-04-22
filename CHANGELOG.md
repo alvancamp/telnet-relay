@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/alvancamp/telnet-relay/compare/v1.1.4...v1.1.5) (2023-04-22)
+
+
+### Bug Fixes
+
+* hyperdeck-specific fixes ([f26a017](https://github.com/alvancamp/telnet-relay/commit/f26a01748abab25b593ca39fffb7d9afa5fe42fc))
+
 ## [1.1.4](https://github.com/alvancamp/telnet-relay/compare/v1.1.3...v1.1.4) (2023-04-21)
 
 
