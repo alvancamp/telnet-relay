@@ -10,6 +10,8 @@ Download and run the executable file for your OS from the [latest release](https
 telnet-relay.exe --connectToHost 192.168.1.50
 ```
 
+Since this was developed with HyperDecks in mind, it defaults to having some HyperDeck-specific behavior enabled. To disable this, pass the `--hyperdeck false` argument.
+
 ## Development
 
 Make sure you have [Node.js 18](https://nodejs.org/en/download) and [Yarn](https://classic.yarnpkg.com/lang/en/docs/install) installed, then:
