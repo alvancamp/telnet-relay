@@ -1,6 +1,6 @@
 # telnet-relay
 
-A simple program that acts as a telnet relay, allowing many clients to connect to one server. Useful for strange servers which only allow a single client, such as Blackmagic HyperDecks.
+A simple program that acts as a telnet relay, allowing many clients to connect to one server. Useful for strange servers which only allow a single client, such as Blackmagic HyperDecks (in certain scenarios).
 
 ## Installation and Usage (Windows, macOS, and Linux)
 
